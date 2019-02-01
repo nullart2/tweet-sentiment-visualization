@@ -1,7 +1,5 @@
 const express = require('express');
 const app = express();
-const server = require('http').Server(app);
-const io = require('socket.io')(server);
 const nunjucks = require('nunjucks');
 const bodyParser = require('body-parser');
 const Twit = require('twit');
@@ -57,7 +55,7 @@ app.get('/search/:q', (req, res) => {
 		tweet_mode: 'extended',
 		lang: 'en',
 		include_entities: false,
-		count: req.query.count || 20
+		count: req.query.count || 100
 	}
 
 	T.get('search/tweets', params, (err, data, response) => {
@@ -90,52 +88,6 @@ app.get('/search/:q', (req, res) => {
 	});
 });
 
-const clientIds = {};
-
-io.on('connection', (socket) => {
-
-	socket.emit('SOCKET_ID', socket.id);
-
-	socket.on('TRACK', (data) => {
-
-		if (clientIds[data.socketId]) {
-			clientIds[data.socketId].stop();
-			delete clientIds[data.socketId];
-			console.log(`Stopped ${data.socketId}`);
-		}
-
-		clientIds[data.socketId] = T.stream('statuses/filter', {
-			track: data.track,
-			tweet_mode: 'extended',
-			lang: 'en'
-		});
-
-		clientIds[data.socketId].on('tweet', (tweet) => {
-
-			const obj = {
-				sentiment: {},
-				full_text: null,
-				user: tweet.user,
-				timestamp: tweet.created_at
-			}
-
-			obj.full_text = getFullText(tweet);
-			obj.sentiment = sentiment.analyze(obj.full_text);
-
-			socket.emit('TWEET', obj);
-		});
-	});
-
-	socket.on('disconnect', () => {
-		if (clientIds[socket.id]) {
-			clientIds[socket.id].stop();
-			delete clientIds[socket.id];
-			console.log(`Stopped ${socket.id}`);
-		}
-	});
-
-});
-
-server.listen(PORT, () => {
+app.listen(PORT, () => {
 	console.log(`Server started on port ${PORT}...`);
 });

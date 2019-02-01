@@ -23,7 +23,7 @@
 					<v-card>
 						<v-card-title>
 							<div class="display-3 text-xs-center">
-								<% title | capitalize %> Live Statistics
+								<% title | capitalize %> Statistics
 							</div>
 						</v-card-title>
 						<v-divider></v-divider>
@@ -44,7 +44,7 @@
 							<v-layout row wrap>
 								<v-flex xs12>
 									<v-list two-line>
-										<template v-for="(item, index) in limitBy(orderBy(statuses, 'timestamp', -1), 5)">
+										<template v-for="(item, index) in orderBy(statuses, 'timestamp', -1)">
 											<v-list-tile avatar :key="index">
 												<v-list-tile-avatar>
 													<img :src="item.user.profile_image_url_https">

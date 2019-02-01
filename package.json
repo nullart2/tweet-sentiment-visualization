@@ -10,7 +10,6 @@
   "keywords": [
     "twitter",
     "sentiment",
-    "sentiment",
     "analysis"
   ],
   "author": "Robert Anthonie C. Soriano",
@@ -20,7 +19,6 @@
     "express": "^4.16.4",
     "nunjucks": "^3.1.7",
     "sentiment": "^5.0.1",
-    "socket.io": "^2.2.0",
     "twit": "^2.2.11"
   }
 }

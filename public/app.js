@@ -1,4 +1,3 @@
-const socket = io.connect();
 Vue.config.productionTip = false;
 
 new Vue({
@@ -8,22 +7,11 @@ new Vue({
 
 	mixins: [Vue2Filters.mixin],
 
-	created () {
-		socket.on('SOCKET_ID', (id) => {
-			console.log('Your socket ID', id);
-			this.socketId = id;
-		});
-
-		this.query = 'Trump';
+	created () {this.query = 'Donald Trump';
 		this.search();
-
-		socket.on('TWEET', (tweet) => {
-			this.statuses.push(tweet);
-		});
 	},
 
 	data: () => ({
-		socketId: null,
 		title: null,
 		query: null,
 		statuses: [],
@@ -41,10 +29,6 @@ new Vue({
 
 				if (data.success) {
 					this.statuses = data.data;
-					socket.emit('TRACK', {
-						socketId: this.socketId,
-						track: this.query
-					});
 				}
 			} catch (error) {
 				console.log(error);
