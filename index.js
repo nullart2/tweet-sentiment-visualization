@@ -57,7 +57,7 @@ app.get('/search/:q', (req, res) => {
 		tweet_mode: 'extended',
 		lang: 'en',
 		include_entities: false,
-		count: req.query.count || 100
+		count: req.query.count || 20
 	}
 
 	T.get('search/tweets', params, (err, data, response) => {

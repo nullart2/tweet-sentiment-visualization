@@ -11,7 +11,11 @@
 		<v-app>
 			<v-toolbar :clipped-left="$vuetify.breakpoint.lgAndUp" color="blue" dark fixed app>
 				<v-toolbar-title style="width: 350px" class="ml-0 pl-3">Tweet Sentiment Visualization</v-toolbar-title>
-				<v-text-field clearable @keyup.enter="search" v-model="query" flat solo-inverted hide-details prepend-inner-icon="search" label="Search topic" class="hidden-sm-and-down"></v-text-field>
+				<v-text-field clearable @keyup.enter="search" v-model="query" flat solo-inverted hide-details prepend-inner-icon="search" label="Search topic" class="hidden-sm-and-down">
+					<v-fade-transition slot="append">
+						<v-progress-circular v-if="loading" size="24" indeterminate></v-progress-circular>
+					</v-fade-transition>
+				</v-text-field>
 				<v-spacer></v-spacer>
 			</v-toolbar>
 			<v-content>

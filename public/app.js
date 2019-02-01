@@ -27,11 +27,13 @@ new Vue({
 		title: null,
 		query: null,
 		statuses: [],
-		tab: null
+		tab: null,
+		loading: false
 	}),
 
 	methods: {
 		async search () {
+			this.loading = true;
 			try {
 				const res = await fetch(`/search/${this.query}`);
 				const data = await res.json();
@@ -47,6 +49,7 @@ new Vue({
 			} catch (error) {
 				console.log(error);
 			}
+			this.loading = false;
 		}
 	},
 
