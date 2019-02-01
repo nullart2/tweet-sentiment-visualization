@@ -10,7 +10,7 @@ const path = require('path');
 const Sentiment = require('sentiment');
 const sentiment = new Sentiment();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3004;
 
 const T = new Twit({
 	consumer_key: config.consumer_key,
