@@ -65,18 +65,16 @@ new Vue({
 				return status.sentiment.negative;
 			})).length;
 
-			// const labels = Array.from(new Set(words));
-
 			const datasets = [
 			{
-				label: 'P v N Words',
+				label: 'Positive and Negative Words',
 				backgroundColor: ['#2196F3', '#F44336'],
 				data: [positives, negatives]
 			}
 			];
 
 			return {
-				labels: ['Positive', 'Negative'],
+				labels: ['Positive Tweets', 'Negative Tweets'],
 				datasets: datasets
 			}
 		},
