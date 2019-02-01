@@ -51,7 +51,7 @@ new Vue({
 			];
 
 			return {
-				labels: ['Positive', 'Negative'],
+				labels: ['Positive Tweets', 'Negative Tweets'],
 				datasets: datasets
 			}
 		},
@@ -65,16 +65,18 @@ new Vue({
 				return status.sentiment.negative;
 			})).length;
 
+			// const labels = Array.from(new Set(words));
+
 			const datasets = [
 			{
-				label: 'Positive and Negative Words',
+				label: 'Positive Vs Negative Words',
 				backgroundColor: ['#2196F3', '#F44336'],
 				data: [positives, negatives]
 			}
 			];
 
 			return {
-				labels: ['Positive Tweets', 'Negative Tweets'],
+				labels: ['Positive', 'Negative'],
 				datasets: datasets
 			}
 		},
