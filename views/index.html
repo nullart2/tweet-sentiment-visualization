@@ -4,13 +4,14 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
 	<link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+	<title>Tweet Sentiment Visualization</title>
 </head>
 <body>
 	<div id="app">
 		<v-app>
 			<v-toolbar :clipped-left="$vuetify.breakpoint.lgAndUp" color="blue" dark fixed app>
-				<v-toolbar-title style="width: 300px" class="ml-0 pl-3">Twitter Sentiment Analyzer</v-toolbar-title>
-				<v-text-field @keyup.enter="search" v-model="query" flat solo-inverted hide-details prepend-inner-icon="search" label="Search" class="hidden-sm-and-down"></v-text-field>
+				<v-toolbar-title style="width: 350px" class="ml-0 pl-3">Tweet Sentiment Visualization</v-toolbar-title>
+				<v-text-field clearable @keyup.enter="search" v-model="query" flat solo-inverted hide-details prepend-inner-icon="search" label="Search topic" class="hidden-sm-and-down"></v-text-field>
 				<v-spacer></v-spacer>
 			</v-toolbar>
 			<v-content>
@@ -18,18 +19,26 @@
 					<v-card>
 						<v-card-title>
 							<div class="display-3 text-xs-center">
-								<% title | capitalize %> Statistics
+								<% title | capitalize %> Live Statistics
 							</div>
 						</v-card-title>
 						<v-divider></v-divider>
 						<v-card-text>
-							<v-layout row wrap>
 
+							<v-layout row wrap>
 								<v-flex xs12 sm6 md6 xl6 lg6>
 									<pie-chart :chart-data="pieChartData"></pie-chart>
 								</v-flex>
 
 								<v-flex xs12 sm6 md6 xl6 lg6>
+									<bar-chart :chart-data="barChartData"></bar-chart>
+								</v-flex>
+							</v-layout>
+
+							<div class="my-3"></div>
+
+							<v-layout row wrap>
+								<v-flex xs12>
 									<v-list two-line>
 										<template v-for="(item, index) in limitBy(orderBy(statuses, 'timestamp', -1), 5)">
 											<v-list-tile avatar :key="index">
@@ -40,12 +49,19 @@
 													<v-list-tile-title v-html="item.full_text"></v-list-tile-title>
 													<v-list-tile-sub-title><% item.timestamp | moment %></v-list-tile-sub-title>
 												</v-list-tile-content>
+												<v-list-tile-action>
+													<v-btn icon>
+														<v-icon color="green" v-if="item.sentiment.score > 0">sentiment_satisfied_alt</v-icon>
+														<v-icon color="red" v-else-if="item.sentiment.score < 0">sentiment_dissatisfied</v-icon>
+														<v-icon color="grey" v-else>face</v-icon>
+													</v-btn>
+												</v-list-tile-action>
 											</v-list-tile>
 										</template>
 									</v-list>
 								</v-flex>
-
 							</v-layout>
+
 						</v-card-text>
 					</v-card>
 				</v-container>

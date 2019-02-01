@@ -40,7 +40,7 @@ function getFullText (tweet) {
 			result = tweet.text;
 		}
 	} else {
-		result = tweet.full_text || tweet.text; 
+		result = tweet.full_text || tweet.text;
 	}
 
 	return result;
@@ -101,6 +101,7 @@ io.on('connection', (socket) => {
 		if (clientIds[data.socketId]) {
 			clientIds[data.socketId].stop();
 			delete clientIds[data.socketId];
+			console.log(`Stopped ${data.socketId}`);
 		}
 
 		clientIds[data.socketId] = T.stream('statuses/filter', {
@@ -121,7 +122,7 @@ io.on('connection', (socket) => {
 			obj.full_text = getFullText(tweet);
 			obj.sentiment = sentiment.analyze(obj.full_text);
 
-			socket.emit('TWEET', obj); 
+			socket.emit('TWEET', obj);
 		});
 	});
 
@@ -129,6 +130,7 @@ io.on('connection', (socket) => {
 		if (clientIds[socket.id]) {
 			clientIds[socket.id].stop();
 			delete clientIds[socket.id];
+			console.log(`Stopped ${socket.id}`);
 		}
 	});
 
