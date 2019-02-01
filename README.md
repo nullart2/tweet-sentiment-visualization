@@ -1,7 +1,7 @@
 # tweet-sentiment-visualization
 Tweet Sentiment Visualization
 
-Demo: [https://tweet-sentiment.herokuapp.com](https://tweet-sentiment.herokuapp.com)
+Demo: [https://tweet-visualization.herokuapp.com](https://tweet-visualization.herokuapp.com)
 
 ## Build Setup
 
